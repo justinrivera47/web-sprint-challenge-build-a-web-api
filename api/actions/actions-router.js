@@ -27,6 +27,19 @@ router.get('/:id', (req, res, next) => {
   })
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try{
+  let deletedId = await Actions.remove(req.params.id)
+  if(!deletedId){
+      res.status(404).json({ message: 'must have valid id' });
+    } else {
+      res.status(200).json(deletedId)
+    } 
+  } catch(err){
+    next(err)
+  }
+})
+
 
 //exporting router 
 module.exports = router
