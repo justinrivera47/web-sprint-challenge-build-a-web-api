@@ -33,18 +33,19 @@ router.put('/:id',
 validateProjectsId,
 validateProjectCompleted,
 validateProject,
-async (req, res, next) => {
-  try {
-    const updateProject = await Projects.update(
+(req, res, next) => {
+  Projects.update(
       req.params.id, {
-        name: req.body.name, 
-        description: req.body.description,
+        name: req.name, 
+        description: req.description,
         completed: req.completed
-      })
-    res.json(updateProject)
-  } catch(err) {
-    next(err)
-  }
+    })
+    .then(updatedProject => {
+      res.json(updatedProject)
+    })
+    .catch(err => {
+      next(err)
+    })
 })
 
 router.delete('/:id', validateProjectsId, async (req, res, next) => {
@@ -56,13 +57,29 @@ router.delete('/:id', validateProjectsId, async (req, res, next) => {
   }
 })
 
-router.get('/api/projects/:id/actions', validateProjectsId, async (req, res, next) => {
+// router.get('/api/projects/:id/actions', validateProjectsId, async (req, res, next) => {
+//   try {
+//   const results = await Projects.getProjectActions(req.params.id);
+//   res.json(results)
+// } catch(err) {
+//   next(err)
+// }
+// })
+
+router.get('/:id/actions', async (req, res, next) => {
   try {
-  const results = await Projects.getProjectActions(req.params.id);
-  res.json(results)
-} catch(err) {
-  next(err)
-}
+    let getProjectAction = await Projects.getProjectActions(req.params.id)
+    res.status(200).json(getProjectAction)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    message: err.message,
+    stack: err.stack
+  })
 })
 
 //exporting router 

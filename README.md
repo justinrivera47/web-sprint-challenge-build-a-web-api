@@ -43,13 +43,13 @@ A _"resetdb"_ script exists that allows you to reset the database to its origina
 
 Inside `api/projects/projects-router.js` build the following endpoints:
 
-- [ ] `[GET] /api/projects`
+- [x] `[GET] /api/projects`
   - Returns an array of projects as the body of the response.
   - If there are no projects it responds with an empty array.
-- [ ] `[GET] /api/projects/:id`
+- [x] `[GET] /api/projects/:id`
   - Returns a project with the given `id` as the body of the response.
   - If there is no project with the given `id` it responds with a status code 404.
-- [ ] `[POST] /api/projects`
+- [x] `[POST] /api/projects`
   - Returns the newly created project as the body of the response.
   - If the request body is missing any of the required fields it responds with a status code 400.
 - [ ] `[PUT] /api/projects/:id`
@@ -92,22 +92,22 @@ The description of the structure and extra information about each _resource_ sto
 
 #### Projects
 
-| Field       | Data Type | Metadata                                                                    |
-| ----------- | --------- | --------------------------------------------------------------------------- |
-| id          | number    | do not provide it when creating projects, the database will generate it     |
-| name        | string    | required                                                                    |
-| description | string    | required                                                                    |
-| completed   | boolean   | not required, defaults to false when creating projects                      |
+| Field       | Data Type | Metadata                                                                |
+| ----------- | --------- | ----------------------------------------------------------------------- |
+| id          | number    | do not provide it when creating projects, the database will generate it |
+| name        | string    | required                                                                |
+| description | string    | required                                                                |
+| completed   | boolean   | not required, defaults to false when creating projects                  |
 
 #### Actions
 
-| Field       | Data Type | Metadata                                                                                         |
-| ----------- | --------- | ------------------------------------------------------------------------------------------------ |
-| id          | number    | do not provide it when creating actions, the database will generate it                           |
-| project_id  | number    | required, must be the id of an existing project                                                  |
-| description | string    | required, up to 128 characters long                                                              |
-| notes       | string    | required, no size limit. Used to record additional notes or requirements to complete the action  |
-| completed   | boolean   | not required, defaults to false when creating actions                                            |
+| Field       | Data Type | Metadata                                                                                        |
+| ----------- | --------- | ----------------------------------------------------------------------------------------------- |
+| id          | number    | do not provide it when creating actions, the database will generate it                          |
+| project_id  | number    | required, must be the id of an existing project                                                 |
+| description | string    | required, up to 128 characters long                                                             |
+| notes       | string    | required, no size limit. Used to record additional notes or requirements to complete the action |
+| completed   | boolean   | not required, defaults to false when creating actions                                           |
 
 ### Database Persistence Helpers
 
