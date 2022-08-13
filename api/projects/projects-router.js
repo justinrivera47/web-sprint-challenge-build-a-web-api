@@ -57,15 +57,6 @@ router.delete('/:id', validateProjectsId, async (req, res, next) => {
   }
 })
 
-// router.get('/api/projects/:id/actions', validateProjectsId, async (req, res, next) => {
-//   try {
-//   const results = await Projects.getProjectActions(req.params.id);
-//   res.json(results)
-// } catch(err) {
-//   next(err)
-// }
-// })
-
 router.get('/:id/actions', async (req, res, next) => {
   try {
     let getProjectAction = await Projects.getProjectActions(req.params.id)
