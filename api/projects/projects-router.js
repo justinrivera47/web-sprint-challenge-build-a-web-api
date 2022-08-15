@@ -31,17 +31,20 @@ router.post('/', validateProject, (req, res, next) => {
 
 router.put('/:id', 
 validateProjectsId,
-validateProjectCompleted,
-validateProject,
 (req, res, next) => {
-  Projects.update(
-      req.params.id, {
-        name: req.name, 
-        description: req.description,
-        completed: req.completed
+  Projects.update(req.params.id, 
+    {
+        name: req.body.name, 
+        description: req.body.description,
+        completed: req.body.completed
     })
     .then(updatedProject => {
-      res.json(updatedProject)
+      let { name, description, completed } = req.body
+      if(!name || !description || !completed) {
+        res.status(400).json({ message: 'enter name'})
+      } else {
+        res.status(200).json(updatedProject)
+      }
     })
     .catch(err => {
       next(err)

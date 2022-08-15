@@ -34,14 +34,29 @@ function validateProject(req, res, next) {
 
 function validateProjectCompleted(req, res, next) {
   const { completed } = req.body
-  if(!completed) {
+
+  if(completed !== "true" || completed !== "false") {
     res.status(400).json({
-      message: 'All fields must be provided'
-    })
+          message: 'completed must be true or false'
+        })
   } else {
     req.completed = completed
     next()
   }
+
+
+
+  // if(completed === "true") {
+  //   req.completed = true
+  //   next()
+  // } else if(completed === "false"){
+  //   req.completed = false
+  //   next()
+  // } else{
+  //   res.status(400).json({
+  //     message: 'completed must be true or false'
+  //   })
+  // } 
 }
 
 module.exports = {

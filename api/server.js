@@ -1,5 +1,5 @@
 const express = require('express');
-const helmet = require('helmet')
+const helmet = require('helmet');
 const server = express();
 // const actionMiddleWare = require('./actions/actions-middlware')
 const actionRouter = require('./actions/actions-router')

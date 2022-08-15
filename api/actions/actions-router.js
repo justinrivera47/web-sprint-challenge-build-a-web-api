@@ -4,6 +4,8 @@ const express = require('express')
 const Actions = require('./actions-model')
 const router = express.Router();
 
+const { validateActionId } = require('./actions-middlware')
+
 //make a action route home that runs GET
 router.get('/', (req, res, next) => {
   Actions.get()
@@ -26,6 +28,27 @@ router.get('/:id', (req, res, next) => {
     next(err)
   })
 });
+
+router.put('/:id', validateActionId, (req, res, next) => {
+  Actions.update(req.params.id, 
+    {
+      notes: req.body.notes, 
+      description: req.body.description,
+      completed: req.body.completed,
+      project_id: req.body.project_id
+    })
+      .then(result => {
+        let {notes, description, completed, project_id } = req.body
+        if(!notes || !description || !completed || !project_id){
+          res.status(400).json({ message: 'please enter notes and description'})
+        } else {
+          res.status(200).json(result)
+        }
+      })
+      .catch(err => {
+        next(err)
+      })
+})
 
 router.delete('/:id', async (req, res, next) => {
   try{

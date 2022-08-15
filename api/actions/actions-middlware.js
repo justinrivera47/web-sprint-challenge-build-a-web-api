@@ -5,7 +5,7 @@ async function validateActionId(req, res, next) {
   try {
     const result = await Action.get(req.params.id)
     if(!result){
-      res.status(404).json({ message: 'please enter a valid Id'})
+      res.status(400).json({ message: 'please enter a valid Id'})
     } else {
       req.result = result
     }
@@ -17,4 +17,10 @@ async function validateActionId(req, res, next) {
   next()
 }
 
-module.exports = validateActionId
+// async function validateActionPut(req, res, next) {
+//   try {
+//     const 
+//   }
+// }
+
+module.exports = { validateActionId }
