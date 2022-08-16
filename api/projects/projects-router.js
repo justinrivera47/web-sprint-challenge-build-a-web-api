@@ -30,7 +30,7 @@ router.post('/', validateProject, (req, res, next) => {
 });
 
 router.put('/:id', 
-validateProjectsId,
+validateProjectsId, validateProject, validateProjectCompleted,
 (req, res, next) => {
   Projects.update(req.params.id, 
     {
@@ -39,16 +39,11 @@ validateProjectsId,
         completed: req.body.completed
     })
     .then(updatedProject => {
-      let { name, description, completed } = req.body
-      if(!name || !description || !completed) {
-        res.status(400).json({ message: 'enter name'})
-      } else {
-        res.status(200).json(updatedProject)
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+        res.status(200).json(updatedProject)  
+  })
+  .catch(err => {
+    next(err)
+  })
 })
 
 router.delete('/:id', validateProjectsId, async (req, res, next) => {

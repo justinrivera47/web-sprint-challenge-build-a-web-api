@@ -10,13 +10,13 @@ async function validateProjectsId(req, res, next) {
       })
     } else {
       req.project = project
+      next()
     }
   } catch (err) {
     res.status(500).json({
       message: "problem finding project"
     })
   }
-  next()
 }
 
 function validateProject(req, res, next) {
@@ -34,8 +34,8 @@ function validateProject(req, res, next) {
 
 function validateProjectCompleted(req, res, next) {
   const { completed } = req.body
-
-  if(completed !== "true" || completed !== "false") {
+  console.log(completed)
+  if(completed === null || completed === undefined || completed === "") {
     res.status(400).json({
           message: 'completed must be true or false'
         })

@@ -29,17 +29,33 @@ router.get('/:id', (req, res, next) => {
   })
 });
 
+router.post('/', (req, res, next) => {
+  Actions.insert({notes: req.notes, description: req.description, completed: req.body.completed})
+  .then(projects => {
+    const { notes, description } = req.body
+    if(!notes || !notes.trim() || !description) {
+      res.status(400).json({ 
+        message: 'missing required project field' 
+      })
+    } else {
+      req.notes = notes.trim()
+      req.description = description.trim()
+    }
+    res.status(201).json(projects)
+  })
+  .catch(next)
+});
+
 router.put('/:id', validateActionId, (req, res, next) => {
   Actions.update(req.params.id, 
     {
       notes: req.body.notes, 
       description: req.body.description,
       completed: req.body.completed,
-      project_id: req.body.project_id
     })
       .then(result => {
-        let {notes, description, completed, project_id } = req.body
-        if(!notes || !description || !completed || !project_id){
+        let {notes, description, completed } = req.body
+        if(!notes || !description || !completed){
           res.status(400).json({ message: 'please enter notes and description'})
         } else {
           res.status(200).json(result)
